@@ -39,31 +39,8 @@
     image.src = settings.imageUrl;
     if (image.loaded) resize();
     $canvas.css({background: 'url('+image.src+')'});
-
-    $(document).ready( function() {
-      $(input).after('<br>', $canvas, '<br>', $reset);
-      $reset.click(reset);
-      $canvas.bind('mousedown', mousedown);
-      $canvas.bind('contextmenu', rightclick);
-      $canvas.bind('mouseup', stopdrag);
-    });
-
-    reset = function() {
-      points = [];
-      draw();
-    };
-
-    move = function(e) {
-      if(!e.offsetX) {
-        e.offsetX = (e.pageX - $(e.target).offset().left);
-        e.offsetY = (e.pageY - $(e.target).offset().top);
-      }
-      points[activePoint] = Math.round(e.offsetX);
-      points[activePoint+1] = Math.round(e.offsetY);
-      draw();
-    };
-
-    stopdrag = function() {
+    
+        stopdrag = function() {
       $(this).unbind('mousemove');
       record();
       activePoint = null;
@@ -133,6 +110,29 @@
       record();
 
       return false;
+    };
+
+    $(document).ready( function() {
+      $(input).after('<br>', $canvas, '<br>', $reset);
+      $reset.click(reset);
+      $canvas.bind('mousedown', mousedown);
+      $canvas.bind('contextmenu', rightclick);
+      $canvas.bind('mouseup', stopdrag);
+    });
+
+    reset = function() {
+      points = [];
+      draw();
+    };
+
+    move = function(e) {
+      if(!e.offsetX) {
+        e.offsetX = (e.pageX - $(e.target).offset().left);
+        e.offsetY = (e.pageY - $(e.target).offset().top);
+      }
+      points[activePoint] = Math.round(e.offsetX);
+      points[activePoint+1] = Math.round(e.offsetY);
+      draw();
     };
 
     draw = function() {
